@@ -15,10 +15,12 @@ export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [writer, setWriter] = useState("");
+  const [loading, setLoading] = useState(false); // 요청 응답전 버튼 비활성화
   const toast = useToast();
   const navigate = useNavigate();
 
   function handleSaveClick() {
+    setLoading(true); // 요청 응답전 버튼 비활성화
     axios
       .post("/api/board/add", {
         // json 형식의 data 가 넘어감
@@ -45,7 +47,7 @@ export function BoardWrite() {
           });
         }
       })
-      .finally();
+      .finally(() => setLoading(false)); // 저장(성공/실패) 후 로딩 풀기(버튼 다시 활성화)
   }
   let disableSaveButton = false;
   if (title.trim().length === 0) {
@@ -81,6 +83,7 @@ export function BoardWrite() {
         </Box>
         <Box>
           <Button
+            isLoading={loading} // 로딩 state
             isDisabled={disableSaveButton}
             onClick={handleSaveClick}
             colorScheme={"blue"}
