@@ -28,7 +28,7 @@ export function BoardView() {
       .get(`/api/board/${id}`)
       .then((res) => setBoard(res.data))
       .catch((err) => {
-        if (err.response.status === 400) {
+        if (err.response.status === 404) {
           toast({
             status: "info",
             description: "해당 게시물이 존재하지 않습니다.",
