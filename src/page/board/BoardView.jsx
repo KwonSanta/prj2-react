@@ -48,7 +48,26 @@ export function BoardView() {
   }, []); // id가 변경될 때마다 useEffect가 다시 실행됩니다.
 
   function handleClickRemove() {
-    axios.delete(`/api/board/${id}`);
+    axios
+      .delete(`/api/board/${id}`)
+      .then(() => {
+        toast({
+          status: "success",
+          description: `${id}번 게시물이 삭제되었습니다.`,
+          position: "top",
+        });
+        navigate("/");
+      })
+      .catch(() => {
+        toast({
+          status: "error",
+          description: `${id}번 게시물 삭제 중 오류가 발생하였습니다.`,
+          position: "top",
+        });
+      })
+      .finally(() => {
+        onClose();
+      });
   }
 
   // useEffect 는 BoardView 컴포넌트가 마운트 끝나고 실행 시작되는데
