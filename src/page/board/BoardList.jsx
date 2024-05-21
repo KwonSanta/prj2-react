@@ -1,18 +1,20 @@
 import { Box, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState([]);
 
-  // [{id:5}, {title:"제목1"}, {writer:"누구1"},
-  // {id:6}, {title:"제목2"}, {writer:"누구2"},
-  // {id:7}, {title:"제목3"}, {writer:"누구3"}] 의 형태로 전달 받음
+  useEffect(() => {
+    //
+    axios.get("/api/board/list").then((res) => setBoardList(res.data));
+  }, []);
 
   return (
     <Box>
-      <Box>게시물 목록</Box>;
+      <Box>게시물 목록</Box>
       <Box>
         <Table>
           <Thead>
