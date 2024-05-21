@@ -34,10 +34,29 @@ export function BoardWrite() {
         });
         navigate("/");
       })
-      .catch()
+      .catch((e) => {
+        const code = e.response.status;
+
+        if (code === 400) {
+          toast({
+            status: "error",
+            description: "등록되지 않았습니다. 입력한 내용을 확인하세요.",
+            position: "top",
+          });
+        }
+      })
       .finally();
   }
-
+  let disableSaveButton = false;
+  if (title.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (content.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (writer.trim().length === 0) {
+    disableSaveButton = true;
+  }
   return (
     <Box>
       <Box>글 작성 화면</Box>
@@ -61,7 +80,11 @@ export function BoardWrite() {
           </FormControl>
         </Box>
         <Box>
-          <Button onClick={handleSaveClick} colorScheme={"blue"}>
+          <Button
+            isDisabled={disableSaveButton}
+            onClick={handleSaveClick}
+            colorScheme={"blue"}
+          >
             저장
           </Button>
         </Box>
