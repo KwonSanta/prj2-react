@@ -67,6 +67,8 @@ export function MemberInfo() {
       })
       .finally(() => {
         setIsLoading(false); // 탈퇴 버튼 광클 못하게
+        setPassword("");
+        onClose();
       });
   }
 
