@@ -1,12 +1,28 @@
-import { useState } from "react";
-import { Box, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import {
+  Box,
+  Spinner,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
+import axios from "axios";
 
 export function MemberList() {
   const [memberList, setMemberList] = useState([]);
 
-  // if (memberList.length === 0) {
-  //   return <Spinner />;
-  // }
+  useEffect(() => {
+    axios.get("/api/member/list").then((res) => {
+      setMemberList(res.data);
+    });
+  }, []);
+
+  if (memberList.length === 0) {
+    return <Spinner />;
+  }
   return (
     <Box>
       <Box>회원 목록</Box>
