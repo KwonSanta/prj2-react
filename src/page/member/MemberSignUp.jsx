@@ -146,7 +146,7 @@ export function MemberSignUp() {
               <Input
                 type={"email"}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setEmail(e.target.value.trim());
                   setIsCheckedEmail(false);
                   // typeMismatch : type 이 일치하면 false 라서 not 을 붙임
                   setIsValidEmail(!e.target.validity.typeMismatch);
@@ -192,8 +192,9 @@ export function MemberSignUp() {
             <FormLabel>별명</FormLabel>
             <InputGroup>
               <Input
+                value={nickName} //🙋🏼🙋🏼🙋🏼
                 onChange={(e) => {
-                  setNickName(e.target.value);
+                  setNickName(e.target.value.trim());
                   setIsCheckedNickName(false);
                 }}
               />
