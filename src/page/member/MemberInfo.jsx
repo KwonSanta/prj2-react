@@ -4,7 +4,14 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -13,9 +20,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export function MemberInfo() {
   const [member, setMember] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const toast = useToast(); // chakra ui 가 하는일
   const navigate = useNavigate(); // react-router 가 하는일
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
     axios
@@ -33,6 +42,31 @@ export function MemberInfo() {
       })
       .finally();
   }, []);
+
+  function handleClickRemove() {
+    setIsLoading(true); // 탈퇴 버튼 클릭되자마자 스피너 돌게 하기
+
+    axios
+      .delete(`api/member/${id}`)
+      .then(() => {
+        toast({
+          status: "success",
+          description: "회원 탈퇴하였습니다.",
+          position: "top",
+        });
+        navigate("/");
+      })
+      .catch(() => {
+        toast({
+          status: "warning",
+          description: "회원 탈퇴 중 문제가 발생하였습니다.",
+          position: "top",
+        });
+      })
+      .finally(() => {
+        setIsLoading(false); // 탈퇴 버튼 광클 못하게
+      });
+  }
 
   if (member === null) {
     return <Spinner />;
@@ -62,9 +96,28 @@ export function MemberInfo() {
         </Box>
         <Box>
           <Button colorScheme={"purple"}>수정</Button>
-          <Button colorScheme={"red"}>삭제</Button>
+          <Button colorScheme={"red"} onClick={onOpen}>
+            탈퇴
+          </Button>
         </Box>
       </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader></ModalHeader>
+          <ModalBody>탈퇴하시겠습니까?</ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>취소</Button>
+            <Button
+              isLoading={isLoading}
+              colorScheme={"red"}
+              onClick={handleClickRemove}
+            >
+              확인
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
