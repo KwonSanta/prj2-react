@@ -8,19 +8,19 @@ export function MemberSignUp() {
         <Box>
           <FormControl>
             <FormLabel>이메일</FormLabel>
-            <Input />
+            <Input onChange={(e) => setEmail(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
           <FormControl>
             <FormLabel>암호</FormLabel>
-            <Input />
+            <Input onChange={(e) => setPassword(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
           <FormControl>
             <FormLabel>별명</FormLabel>
-            <Input />
+            <Input onChange={(e) => set(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
