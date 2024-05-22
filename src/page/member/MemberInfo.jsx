@@ -21,10 +21,12 @@ import { useNavigate, useParams } from "react-router-dom";
 export function MemberInfo() {
   const [member, setMember] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState("");
+
   const { id } = useParams();
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast(); // chakra ui 가 하는일
   const navigate = useNavigate(); // react-router 가 하는일
-  const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
     axios
@@ -47,7 +49,7 @@ export function MemberInfo() {
     setIsLoading(true); // 탈퇴 버튼 클릭되자마자 스피너 돌게 하기
 
     axios
-      .delete(`api/member/${id}`)
+      .delete(`api/member/${id}`, { data: { id, password } })
       .then(() => {
         toast({
           status: "success",
@@ -104,8 +106,13 @@ export function MemberInfo() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader></ModalHeader>
-          <ModalBody>탈퇴하시겠습니까?</ModalBody>
+          <ModalHeader>탈퇴 확인</ModalHeader>
+          <ModalBody>
+            <FormControl>
+              <FormLabel>암호</FormLabel>
+              <Input onChange={(e) => setPassword(e.target.value)} />
+            </FormControl>
+          </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>취소</Button>
             <Button
