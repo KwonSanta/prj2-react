@@ -22,11 +22,10 @@ export function MemberInfo() {
   const [member, setMember] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
-
   const { id } = useParams();
+  const toast = useToast();
+  const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const toast = useToast(); // chakra ui 가 하는일
-  const navigate = useNavigate(); // react-router 가 하는일
 
   useEffect(() => {
     axios
@@ -39,17 +38,16 @@ export function MemberInfo() {
             description: "존재하지 않는 회원입니다.",
             position: "top",
           });
-          navigate("/member/list");
+          navigate("/");
         }
-      })
-      .finally();
+      });
   }, []);
 
   function handleClickRemove() {
-    setIsLoading(true); // 탈퇴 버튼 클릭되자마자 스피너 돌게 하기
+    setIsLoading(true);
 
     axios
-      .delete(`api/member/${id}`, { data: { id, password } })
+      .delete(`/api/member/${id}`, { data: { id, password } })
       .then(() => {
         toast({
           status: "success",
@@ -66,7 +64,7 @@ export function MemberInfo() {
         });
       })
       .finally(() => {
-        setIsLoading(false); // 탈퇴 버튼 광클 못하게
+        setIsLoading(false);
         setPassword("");
         onClose();
       });
@@ -105,6 +103,7 @@ export function MemberInfo() {
           </Button>
         </Box>
       </Box>
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -112,10 +111,7 @@ export function MemberInfo() {
           <ModalBody>
             <FormControl>
               <FormLabel>암호</FormLabel>
-              <Input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <Input onChange={(e) => setPassword(e.target.value)} />
             </FormControl>
           </ModalBody>
           <ModalFooter>
