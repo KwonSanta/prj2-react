@@ -54,7 +54,9 @@ export function MemberEdit() {
   function handleClickSave() {
     axios
       .put("/api/member/modify", { ...member, oldPassword })
-      .then((res) => {})
+      .then((res) => {
+        navigate("/member/list");
+      })
       .catch(() => {})
       .finally(() => {});
   }
@@ -70,6 +72,9 @@ export function MemberEdit() {
   if (member.nickName.length === 0) {
     isDisableNickNameCheckButton = true;
   }
+  if (isCheckedNickName) {
+    isDisableNickNameCheckButton = true;
+  }
 
   let isDisableSaveButton = false;
   if (member.password !== passwordCheck) {
@@ -77,6 +82,10 @@ export function MemberEdit() {
   }
 
   if (member.nickName.trim().length === 0) {
+    isDisableSaveButton = true;
+  }
+
+  if (!isCheckedNickName) {
     isDisableSaveButton = true;
   }
 
@@ -142,9 +151,11 @@ export function MemberEdit() {
           <FormControl>별명</FormControl>
           <InputGroup>
             <Input
-              onChange={(e) =>
-                setMember({ ...member, nickName: e.target.value.trim() })
-              }
+              onChange={(e) => {
+                const newNickName = e.target.value.trim();
+                setMember({ ...member, nickName: newNickName });
+                setIsCheckedNickName(newNickName === oldNickName);
+              }}
               value={member.nickName}
             />
             <InputRightElement w={"75px"} mr={1}>
