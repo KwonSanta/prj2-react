@@ -7,15 +7,16 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../component/LoginProvider.jsx";
 
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [writer, setWriter] = useState("");
   const [loading, setLoading] = useState(false); // 요청 응답전 버튼 비활성화
+  const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -26,7 +27,6 @@ export function BoardWrite() {
         // json 형식의 data 가 넘어감
         title, // 변수명과 프로퍼티명이 같으면 하나만 작성
         content,
-        writer,
       })
       .then(() => {
         toast({
@@ -72,7 +72,7 @@ export function BoardWrite() {
         <Box>
           <FormControl>
             <FormLabel>본문</FormLabel>
-            <Textarea onChange={(e) => setContent(e.target.value)} />
+            <Textarea readOnly value={account.nickName} />
           </FormControl>
         </Box>
         <Box>
