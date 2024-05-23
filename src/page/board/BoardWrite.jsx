@@ -23,11 +23,19 @@ export function BoardWrite() {
   function handleSaveClick() {
     setLoading(true); // 요청 응답전 버튼 비활성화
     axios
-      .post("/api/board/add", {
-        // json 형식의 data 가 넘어감
-        title, // 변수명과 프로퍼티명이 같으면 하나만 작성
-        content,
-      })
+      .post(
+        "/api/board/add",
+        {
+          // json 형식의 data 가 넘어감
+          title, // 변수명과 프로퍼티명이 같으면 하나만 작성
+          content,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      )
       .then(() => {
         toast({
           description: "새 글이 등록되었습니다.",
