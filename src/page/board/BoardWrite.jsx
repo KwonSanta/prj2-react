@@ -56,9 +56,7 @@ export function BoardWrite() {
   if (content.trim().length === 0) {
     disableSaveButton = true;
   }
-  if (writer.trim().length === 0) {
-    disableSaveButton = true;
-  }
+
   return (
     <Box>
       <Box>글 작성 화면</Box>
@@ -72,13 +70,13 @@ export function BoardWrite() {
         <Box>
           <FormControl>
             <FormLabel>본문</FormLabel>
-            <Textarea readOnly value={account.nickName} />
+            <Textarea onChange={(e) => setContent(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
           <FormControl>
             <FormLabel>작성자</FormLabel>
-            <Input onChange={(e) => setWriter(e.target.value)} />
+            <Input readOnly value={account.nickName} />
           </FormControl>
         </Box>
         <Box>
