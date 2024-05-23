@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./page/Home.jsx";
@@ -6,41 +6,35 @@ import { BoardWrite } from "./page/board/BoardWrite.jsx";
 import { BoardList } from "./page/board/BoardList.jsx";
 import { BoardView } from "./page/board/BoardView.jsx";
 import { BoardEdit } from "./page/board/BoardEdit.jsx";
-import { MemberSignUp } from "./page/member/MemberSignUp.jsx";
+import { MemberSignup } from "./page/member/MemberSignup.jsx";
 import { MemberList } from "./page/member/MemberList.jsx";
 import { MemberInfo } from "./page/member/MemberInfo.jsx";
 import { MemberEdit } from "./page/member/MemberEdit.jsx";
 import { MemberLogin } from "./page/member/MemberLogin.jsx";
+import { LoginProvider } from "./component/LoginProvider.jsx";
 
-function App() {
-  const LoginContext = createContext(null);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    children: [
+      {
+        index: true,
+        element: <BoardList />,
+      },
+      { path: "write", element: <BoardWrite /> },
+      { path: "board/:id", element: <BoardView /> },
+      { path: "edit/:id", element: <BoardEdit /> },
+      { path: "signup", element: <MemberSignup /> },
+      { path: "member/list", element: <MemberList /> },
+      { path: "member/:id", element: <MemberInfo /> },
+      { path: "member/edit/:id", element: <MemberEdit /> },
+      { path: "login", element: <MemberLogin /> },
+    ],
+  },
+]);
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home />, // /write request 시 <Home /> 이 보임
-      children: [
-        {
-          index: true, // 서브 경로가 없을 때의 경로
-          element: <BoardList />,
-        },
-        { path: "write", element: <BoardWrite /> },
-        { path: "board/:id", element: <BoardView /> },
-        { path: "edit/:id", element: <BoardEdit /> },
-        { path: "signup", element: <MemberSignUp /> },
-        { path: "member/list", element: <MemberList /> },
-        { path: "member/:id", element: <MemberInfo /> },
-        { path: "member/edit/:id", element: <MemberEdit /> },
-        { path: "login", element: <MemberLogin /> },
-      ], // <Outlet />
-    },
-  ]);
-
-  function LoginProvider({ children }) {
-    return (
-      <LoginContext.Provider value={null}>{children}</LoginContext.Provider>
-    );
-  }
+function App(props) {
   return (
     <LoginProvider>
       <ChakraProvider>
