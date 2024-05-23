@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -18,6 +18,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { LoginContext } from "../../component/LoginProvider.jsx";
 
 export function BoardView() {
   // useParams 훅을 사용하여 URL 매개변수에서 id를 가져옵니다.
@@ -27,6 +28,7 @@ export function BoardView() {
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const account = useContext(LoginContext);
 
   // useEffect 훅은 컴포넌트가 마운트된 후에 실행됩니다.
   useEffect(() => {
@@ -99,7 +101,7 @@ export function BoardView() {
         <Box>
           <FormControl>
             <FormLabel>작성자</FormLabel>
-            <Input value={board.writer} readOnly />
+            <Input value={account.nickName} readOnly />
           </FormControl>
         </Box>
         <Box>
