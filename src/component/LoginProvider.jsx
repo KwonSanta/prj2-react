@@ -7,11 +7,10 @@ export function LoginProvider({ children }) {
   const [email, setEmail] = useState("");
   const [nickName, setNickName] = useState("");
   const [expired, setExpired] = useState(0);
-  // email
-  // nickName
+
   // isLoggedIn
   function isLoggedIn() {
-    return Date.now() < expired * 1000; // javascript는 밀리세컨(13자리)까지, payload는 년월일시분초(10자리)라 *1000함
+    return Date.now() < expired * 1000;
   }
 
   // hasEmail
@@ -27,7 +26,6 @@ export function LoginProvider({ children }) {
     setEmail(payload.sub);
     setNickName(payload.nickName);
   }
-
   // logout
   function logout() {
     localStorage.removeItem("token");
