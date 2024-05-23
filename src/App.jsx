@@ -9,6 +9,7 @@ import { BoardEdit } from "./page/board/BoardEdit.jsx";
 import { MemberSignUp } from "./page/member/MemberSignUp.jsx";
 import { MemberList } from "./page/member/MemberList.jsx";
 import { MemberInfo } from "./page/member/MemberInfo.jsx";
+import { MemberEdit } from "./page/member/MemberEdit.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,6 +27,7 @@ function App() {
         { path: "signup", element: <MemberSignUp /> },
         { path: "member/list", element: <MemberList /> },
         { path: "member/:id", element: <MemberInfo /> },
+        { path: "member/edit/:id", element: <MemberEdit /> },
       ], // <Outlet />
     },
   ]);
