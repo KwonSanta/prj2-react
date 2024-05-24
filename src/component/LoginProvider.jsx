@@ -7,6 +7,7 @@ export function LoginProvider({ children }) {
   const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
   const [expired, setExpired] = useState(0);
+  const [authority, setAuthority] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -26,6 +27,10 @@ export function LoginProvider({ children }) {
     return id == param; // 타입 동일하게 변경해서 확인하는 연산자 '=='
   }
 
+  function isAdmin() {
+    return authority.includes("admin");
+  }
+
   // login
   function login(token) {
     localStorage.setItem("token", token);
@@ -33,13 +38,16 @@ export function LoginProvider({ children }) {
     setExpired(payload.exp);
     setId(payload.sub);
     setNickName(payload.nickName);
+    setAuthority(payload.scope.split(" ")); // "admin manager user" -> split() 사용
   }
+
   // logout
   function logout() {
     localStorage.removeItem("token");
     setExpired(0);
     setId("");
     setNickName("");
+    setAuthority([]);
   }
 
   return (
@@ -51,6 +59,7 @@ export function LoginProvider({ children }) {
         logout: logout,
         isLoggedIn: isLoggedIn,
         hasAccess: hasAccess,
+        isAdmin: isAdmin,
       }}
     >
       {children}

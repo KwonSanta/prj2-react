@@ -27,7 +27,6 @@ export function MemberEdit() {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
-
   const { id } = useParams();
   const toast = useToast();
   const navigate = useNavigate();
@@ -45,7 +44,7 @@ export function MemberEdit() {
         toast({
           status: "warning",
           description: "회원 정보 조회 중 문제가 발생하였습니다.",
-          position: "bottom",
+          position: "top",
         });
         navigate("/");
       });
@@ -58,7 +57,7 @@ export function MemberEdit() {
         toast({
           status: "success",
           description: "회원 정보가 수정되었습니다.",
-          position: "bottom",
+          position: "top",
         });
         navigate(`/member/${id}`);
       })
@@ -66,7 +65,7 @@ export function MemberEdit() {
         toast({
           status: "error",
           description: "회원 정보가 수정되지 않았습니다.",
-          position: "bottom",
+          position: "top",
         });
       })
       .finally(() => {
@@ -80,17 +79,21 @@ export function MemberEdit() {
   }
 
   let isDisableNickNameCheckButton = false;
+
   if (member.nickName === oldNickName) {
     isDisableNickNameCheckButton = true;
   }
-  if (member.nickName.length === 0) {
+
+  if (member.nickName.length == 0) {
     isDisableNickNameCheckButton = true;
   }
+
   if (isCheckedNickName) {
     isDisableNickNameCheckButton = true;
   }
 
   let isDisableSaveButton = false;
+
   if (member.password !== passwordCheck) {
     isDisableSaveButton = true;
   }
@@ -107,20 +110,18 @@ export function MemberEdit() {
     axios
       .get(`/api/member/check?nickName=${member.nickName}`)
       .then((res) => {
-        // 이미 있는 이메일 (사용 X)
         toast({
           status: "warning",
           description: "사용할 수 없는 별명입니다.",
-          position: "bottom",
+          position: "top",
         });
       })
       .catch((err) => {
         if (err.response.status === 404) {
-          // 사용할 수 있는 이메일
           toast({
             status: "info",
             description: "사용할 수 있는 별명입니다.",
-            position: "bottom",
+            position: "top",
           });
           setIsCheckedNickName(true);
         }
@@ -175,8 +176,8 @@ export function MemberEdit() {
             <InputRightElement w={"75px"} mr={1}>
               <Button
                 isDisabled={isDisableNickNameCheckButton}
-                onClick={handleCheckNickName}
                 size={"sm"}
+                onClick={handleCheckNickName}
               >
                 중복확인
               </Button>
