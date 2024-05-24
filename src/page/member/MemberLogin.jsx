@@ -27,7 +27,7 @@ export function MemberLogin() {
         toast({
           status: "success",
           description: "로그인 되었습니다.",
-          position: "top",
+          position: "bottom",
         });
         navigate("/");
       })
@@ -36,7 +36,7 @@ export function MemberLogin() {
         toast({
           status: "warning",
           description: "이메일과 암호를 확인해주세요.",
-          position: "top",
+          position: "bottom",
         });
       });
   }
