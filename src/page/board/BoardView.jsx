@@ -37,7 +37,7 @@ export function BoardView() {
           toast({
             status: "info",
             description: "해당 게시물이 존재하지 않습니다.",
-            position: "bottom",
+            position: "top",
           });
           navigate("/");
         }
@@ -55,7 +55,7 @@ export function BoardView() {
         toast({
           status: "success",
           description: `${id}번 게시물이 삭제되었습니다.`,
-          position: "bottom",
+          position: "top",
         });
         navigate("/");
       })
@@ -63,7 +63,7 @@ export function BoardView() {
         toast({
           status: "error",
           description: `${id}번 게시물 삭제 중 오류가 발생하였습니다.`,
-          position: "bottom",
+          position: "top",
         });
       })
       .finally(() => {

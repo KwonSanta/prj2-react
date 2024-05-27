@@ -29,7 +29,6 @@ export function MemberEdit() {
   const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
   const account = useContext(LoginContext);
-
   const { id } = useParams();
   const toast = useToast();
   const navigate = useNavigate();

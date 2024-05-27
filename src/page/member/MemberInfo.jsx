@@ -24,7 +24,6 @@ export function MemberInfo() {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const account = useContext(LoginContext);
-
   const { id } = useParams();
   const toast = useToast();
   const navigate = useNavigate();
@@ -43,9 +42,16 @@ export function MemberInfo() {
           toast({
             status: "warning",
             description: "존재하지 않는 회원입니다.",
-            position: "bottom",
+            position: "top",
           });
           navigate("/");
+        } else if (err.response.status === 403) {
+          toast({
+            status: "error",
+            description: "권한이 없습니다.",
+            position: "top",
+          });
+          navigate(-1);
         }
       });
   }, []);
@@ -64,7 +70,7 @@ export function MemberInfo() {
         toast({
           status: "success",
           description: "회원 탈퇴하였습니다.",
-          position: "bottom",
+          position: "top",
         });
         account.logout();
         navigate("/");
@@ -73,7 +79,7 @@ export function MemberInfo() {
         toast({
           status: "warning",
           description: "회원 탈퇴 중 문제가 발생하였습니다.",
-          position: "bottom",
+          position: "top",
         });
       })
       .finally(() => {

@@ -15,13 +15,13 @@ import { useNavigate } from "react-router-dom";
 
 export function MemberSignup() {
   const [email, setEmail] = useState("");
-  const [isValidEmail, setIsValidEmail] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [nickName, setNickName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickName, setIsCheckedNickName] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -37,11 +37,10 @@ export function MemberSignup() {
           position: "top",
         });
         // todo : 로그인 화면으로 이동
-        navigate("/member/list");
+        navigate("/");
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          // 400 Code : Client 쪽 오류
           toast({
             status: "error",
             description: "입력값을 확인해 주세요.",
@@ -64,13 +63,12 @@ export function MemberSignup() {
     axios
       .get(`/api/member/check?email=${email}`)
       .then((res) => {
-        // 이미 있는 이메일 (사용 X)
         toast({
           status: "warning",
           description: "사용할 수 없는 이메일입니다.",
           position: "top",
         });
-      })
+      }) // 이미 있는 이메일 (사용 못함)
       .catch((err) => {
         if (err.response.status === 404) {
           // 사용할 수 있는 이메일
@@ -89,7 +87,6 @@ export function MemberSignup() {
     axios
       .get(`/api/member/check?nickName=${nickName}`)
       .then((res) => {
-        // 이미 있는 이메일 (사용 X)
         toast({
           status: "warning",
           description: "사용할 수 없는 별명입니다.",
@@ -98,7 +95,6 @@ export function MemberSignup() {
       })
       .catch((err) => {
         if (err.response.status === 404) {
-          // 사용할 수 있는 이메일
           toast({
             status: "info",
             description: "사용할 수 있는 별명입니다.",
@@ -111,10 +107,13 @@ export function MemberSignup() {
   }
 
   const isCheckedPassword = password === passwordCheck;
+
   let isDisabled = false;
+
   if (!isCheckedPassword) {
     isDisabled = true;
   }
+
   if (
     !(
       email.trim().length > 0 &&
@@ -128,6 +127,7 @@ export function MemberSignup() {
   if (!isCheckedEmail) {
     isDisabled = true;
   }
+
   if (!isCheckedNickName) {
     isDisabled = true;
   }
@@ -135,9 +135,10 @@ export function MemberSignup() {
   if (!isValidEmail) {
     isDisabled = true;
   }
+
   return (
     <Box>
-      <Box>회원가입</Box>
+      <Box>회원 가입</Box>
       <Box>
         <Box>
           <FormControl>
@@ -146,9 +147,8 @@ export function MemberSignup() {
               <Input
                 type={"email"}
                 onChange={(e) => {
-                  setEmail(e.target.value.trim());
+                  setEmail(e.target.value);
                   setIsCheckedEmail(false);
-                  // typeMismatch : type 이 일치하면 false 라서 not 을 붙임
                   setIsValidEmail(!e.target.validity.typeMismatch);
                 }}
               />
@@ -192,7 +192,7 @@ export function MemberSignup() {
             <FormLabel>별명</FormLabel>
             <InputGroup>
               <Input
-                value={nickName} //🙋🏼🙋🏼🙋🏼
+                value={nickName}
                 onChange={(e) => {
                   setNickName(e.target.value.trim());
                   setIsCheckedNickName(false);
@@ -201,8 +201,8 @@ export function MemberSignup() {
               <InputRightElement w={"75px"} mr={1}>
                 <Button
                   isDisabled={nickName.trim().length == 0}
-                  onClick={handleCheckNickName}
                   size={"sm"}
+                  onClick={handleCheckNickName}
                 >
                   중복확인
                 </Button>
@@ -216,8 +216,8 @@ export function MemberSignup() {
         <Box>
           <Button
             isLoading={isLoading}
-            onClick={handleClick}
             colorScheme={"blue"}
+            onClick={handleClick}
             isDisabled={isDisabled}
           >
             가입

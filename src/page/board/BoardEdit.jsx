@@ -49,8 +49,7 @@ export function BoardEdit() {
         if (err.response.status === 400) {
           toast({
             status: "error",
-            description:
-              "게시물이 수정되지 않았습니다. 작성한 내용을 확인해주세요.",
+            description: `게시물이 수정되지 않았습니다. 작성한 내용을 확인해주세요.`,
             position: "top",
           });
         }
@@ -105,7 +104,9 @@ export function BoardEdit() {
           <ModalBody>저장하시겠습니까?</ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>취소</Button>
-            <Button onClick={handleClickSave}>확인</Button>
+            <Button onClick={handleClickSave} colorScheme={"blue"}>
+              확인
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

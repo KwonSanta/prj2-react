@@ -15,19 +15,18 @@ import { LoginContext } from "../../component/LoginProvider.jsx";
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false); // 요청 응답전 버튼 비활성화
+  const [loading, setLoading] = useState(false);
   const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
 
   function handleSaveClick() {
-    setLoading(true); // 요청 응답전 버튼 비활성화
+    setLoading(true);
     axios
       .post(
         "/api/board/add",
         {
-          // json 형식의 data 가 넘어감
-          title, // 변수명과 프로퍼티명이 같으면 하나만 작성
+          title,
           content,
         },
         {
@@ -40,7 +39,7 @@ export function BoardWrite() {
         toast({
           description: "새 글이 등록되었습니다.",
           status: "success",
-          position: "bottom",
+          position: "top",
         });
         navigate("/");
       })
@@ -51,12 +50,13 @@ export function BoardWrite() {
           toast({
             status: "error",
             description: "등록되지 않았습니다. 입력한 내용을 확인하세요.",
-            position: "bottom",
+            position: "top",
           });
         }
       })
-      .finally(() => setLoading(false)); // 저장(성공/실패) 후 로딩 풀기(버튼 다시 활성화)
+      .finally(() => setLoading(false));
   }
+
   let disableSaveButton = false;
   if (title.trim().length === 0) {
     disableSaveButton = true;
@@ -89,10 +89,10 @@ export function BoardWrite() {
         </Box>
         <Box>
           <Button
-            isLoading={loading} // 로딩 state
+            isLoading={loading}
             isDisabled={disableSaveButton}
-            onClick={handleSaveClick}
             colorScheme={"blue"}
+            onClick={handleSaveClick}
           >
             저장
           </Button>
