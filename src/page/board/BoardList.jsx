@@ -14,7 +14,7 @@ export function BoardList() {
     axios
       .get(`/api/board/list?${searchParams}`)
       .then((res) => setBoardList(res.data));
-  }, []);
+  }, [searchParams]);
 
   return (
     <Box>
