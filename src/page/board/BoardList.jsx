@@ -1,22 +1,6 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import {
-  faAngleLeft,
-  faAngleRight,
-  faAnglesLeft,
-  faAnglesRight,
-  faUserPen,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -71,23 +55,12 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
-      <Flex gap={2}>
-        <Flex gap={2}>
-          {pageInfo.prevPageNumber && (
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.firstPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAnglesLeft} />
-            </Button>
-          )}
-          {pageInfo.prevPageNumber || (
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAngleLeft} />
-            </Button>
-          )}
-        </Flex>
+      <Box>
+        {pageInfo.prevPageNumber && (
+          <Button onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}>
+            이전
+          </Button>
+        )}
         {pageNumbers.map((pageNumber) => (
           <Button
             onClick={() => navigate(`/?page=${pageNumber}`)}
@@ -99,23 +72,12 @@ export function BoardList() {
             {pageNumber}
           </Button>
         ))}
-        <Flex gap={2}>
-          {pageInfo.nextPageNumber && (
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAngleRight} />
-            </Button>
-          )}
-          {pageInfo.currentPageNumber === pageInfo.lastPageNumber || (
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAnglesRight} />
-            </Button>
-          )}
-        </Flex>
-      </Flex>
+        {pageInfo.nextPageNumber && (
+          <Button onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}>
+            다음
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 }
