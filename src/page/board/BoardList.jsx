@@ -38,6 +38,9 @@ export function BoardList() {
       setBoardList(res.data.boardList);
       setPageInfo(res.data.pageInfo);
     });
+    setSearchType("all");
+    setSearchKeyword("");
+
     const typeParam = searchParams.get("type");
     const keywordParam = searchParams.get("keyword");
     if (typeParam) {
@@ -55,6 +58,11 @@ export function BoardList() {
 
   function handleSearchClick() {
     navigate(`/?type=${searchType}&keyword=${searchKeyword}`);
+  }
+
+  function handlePageButtonClick(pageNumber) {
+    searchParams.set("page", pageNumber);
+    navigate(`/?${searchParams}`);
   }
 
   return (
@@ -121,11 +129,11 @@ export function BoardList() {
       <Center>
         {pageInfo.prevPageNumber && (
           <>
-            <Button onClick={() => navigate(`/?page=1`)}>
+            <Button onClick={() => handlePageButtonClick(1)}>
               <FontAwesomeIcon icon={faAnglesLeft} />
             </Button>
             <Button
-              onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+              onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
             >
               <FontAwesomeIcon icon={faAngleLeft} />
             </Button>
@@ -133,7 +141,7 @@ export function BoardList() {
         )}
         {pageNumbers.map((pageNumber) => (
           <Button
-            onClick={() => navigate(`/?page=${pageNumber}`)}
+            onClick={() => handlePageButtonClick(pageNumber)}
             key={pageNumber}
             colorScheme={
               pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
@@ -145,12 +153,12 @@ export function BoardList() {
         {pageInfo.nextPageNumber && (
           <>
             <Button
-              onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
+              onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
             >
               <FontAwesomeIcon icon={faAngleRight} />
             </Button>
             <Button
-              onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
+              onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
             >
               <FontAwesomeIcon icon={faAnglesRight} />
             </Button>
