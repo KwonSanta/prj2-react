@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   Textarea,
@@ -25,18 +26,11 @@ export function BoardWrite() {
   function handleSaveClick() {
     setLoading(true);
     axios
-      .post(
-        "/api/board/add",
-        {
-          title,
-          content,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        },
-      )
+      .postForm("/api/board/add", {
+        title,
+        content,
+        files,
+      })
       .then(() => {
         toast({
           description: "새 글이 등록되었습니다.",
@@ -98,6 +92,9 @@ export function BoardWrite() {
               accept="image/*"
               onChange={(e) => setFiles(e.target.files)}
             />
+            <FormHelperText>
+              총 용량은 10MB, 한 파일은 1MB를 초과할 수 없습니다.
+            </FormHelperText>
           </FormControl>
         </Box>
         <Box>
