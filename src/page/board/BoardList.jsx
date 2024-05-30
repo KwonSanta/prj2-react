@@ -19,6 +19,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faComments,
   faHeart,
   faImages,
   faMagnifyingGlass,
@@ -104,6 +105,12 @@ export function BoardList() {
                       <Badge>
                         <FontAwesomeIcon icon={faImages} />
                         {board.numberOfImages}
+                      </Badge>
+                    )}
+                    {board.numberOfComments > 0 && (
+                      <Badge>
+                        <FontAwesomeIcon icon={faComments} />
+                        {board.numberOfComments}
                       </Badge>
                     )}
                   </Td>
