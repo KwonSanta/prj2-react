@@ -6,12 +6,12 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 export function CommentWrite({ boardId, isSending, setIsSending }) {
   const [comment, setComment] = useState("");
-
   const toast = useToast();
+
   function handleCommentSubmitClick() {
     setIsSending(true);
     axios
-      .post(`/api/comment/add`, {
+      .post("/api/comment/add", {
         boardId,
         comment,
       })
@@ -23,7 +23,7 @@ export function CommentWrite({ boardId, isSending, setIsSending }) {
           status: "success",
         });
       })
-      .catch()
+      .catch(() => {})
       .finally(() => {
         setIsSending(false);
       });
@@ -32,9 +32,9 @@ export function CommentWrite({ boardId, isSending, setIsSending }) {
   return (
     <Box>
       <Textarea
-        onChange={(e) => setComment(e.target.value)}
+        placeholder="댓글을 작성해 보세요."
         value={comment}
-        placeholder={"댓글을 작성해 보세요."}
+        onChange={(e) => setComment(e.target.value)}
       />
       <Button
         isLoading={isSending}

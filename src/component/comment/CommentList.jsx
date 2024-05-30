@@ -4,7 +4,6 @@ import { Box, Flex, Spacer } from "@chakra-ui/react";
 
 export function CommentList({ boardId, isSending }) {
   const [commentList, setCommentList] = useState([]);
-
   useEffect(() => {
     if (!isSending) {
       axios
@@ -12,11 +11,10 @@ export function CommentList({ boardId, isSending }) {
         .then((res) => {
           setCommentList(res.data);
         })
-        .catch()
-        .finally();
+        .catch((err) => console.log(err))
+        .finally(() => {});
     }
   }, [isSending]);
-
   if (commentList.length === 0) {
     return <Box>댓글이 없습니다. 첫 댓글을 작성해보세요.</Box>;
   }
