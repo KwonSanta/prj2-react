@@ -107,7 +107,7 @@ export function BoardList() {
                       </Badge>
                     )}
                   </Td>
-                  <Td>{board.numberOfLike > 0 && board.numberOfLike}</Td>
+                  <Td>{board.numberOfLike >= 0 && board.numberOfLike}</Td>
                   <Td>{board.writer}</Td>
                 </Tr>
               ))}
