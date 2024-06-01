@@ -12,7 +12,7 @@ export function Home() {
           lg: 200,
           base: 0,
         }}
-        mt={20}
+        mt={10}
       >
         <Outlet />
       </Box>

@@ -22,6 +22,7 @@ axios.interceptors.request.use((config) => {
   }
   return config;
 });
+
 const router = createBrowserRouter([
   {
     path: "/",
