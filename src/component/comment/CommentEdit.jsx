@@ -8,21 +8,23 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Stack,
   Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import axios from "axios";
 
 export function CommentEdit({
-  comment,
-  setIsEditing,
-  setIsProcessing,
-  isProcessing,
-}) {
+                              comment,
+                              setIsEditing,
+                              setIsProcessing,
+                              isProcessing,
+                            }) {
   const [commentText, setCommentText] = useState(comment.comment);
   const { onClose, onOpen, isOpen } = useDisclosure();
   const toast = useToast();

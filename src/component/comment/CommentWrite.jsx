@@ -8,8 +8,8 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import axios from "axios";
+import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { LoginContext } from "../LoginProvider.jsx";
 
 export function CommentWrite({ boardId, isProcessing, setIsProcessing }) {

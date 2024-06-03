@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Box, Card, CardBody, Stack, StackDivider } from "@chakra-ui/react";
+import axios from "axios";
 import { CommentItem } from "./CommentItem.jsx";
 
 export function CommentList({ boardId, isProcessing, setIsProcessing }) {

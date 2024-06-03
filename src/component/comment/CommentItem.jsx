@@ -9,15 +9,21 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
+  Stack,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import {
+  faCalendarDays,
+  faPenToSquare,
+  faTrashCan,
+  faUser,
+} from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { LoginContext } from "../LoginProvider.jsx";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { CommentEdit } from "./CommentEdit.jsx";
 
 export function CommentItem({ comment, isProcessing, setIsProcessing }) {
