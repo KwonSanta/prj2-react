@@ -22,9 +22,9 @@ export function LoginProvider({ children }) {
     return Date.now() < expired * 1000;
   }
 
-  // 권한 확인
+  // 권한 있는 지? 확인
   function hasAccess(param) {
-    return id == param; // 타입 동일하게 변경해서 확인하는 연산자 '=='
+    return id == param;
   }
 
   function isAdmin() {
@@ -38,9 +38,8 @@ export function LoginProvider({ children }) {
     setExpired(payload.exp);
     setId(payload.sub);
     setNickName(payload.nickName);
-    setAuthority(payload.scope.split(" ")); // "admin manager user" -> split() 사용
+    setAuthority(payload.scope.split(" ")); // "admin manager user"
   }
-
   // logout
   function logout() {
     localStorage.removeItem("token");
